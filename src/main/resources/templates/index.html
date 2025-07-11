@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Fitness Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container mt-4">
+    <h1>Fitness Tracker Activities</h1>
+
+    <a href="/activities/new" class="btn btn-success mb-3">Add New Activity</a>
+
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Duration (minutes)</th>
+            <th>Calories Burned</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="activity : ${activities}">
+            <td th:text="${activity.name}">Activity Name</td>
+            <td th:text="${activity.duration}">Duration</td>
+            <td th:text="${activity.caloriesBurned}">Calories</td>
+            <td th:text="${activity.category}">Category</td>
+            <td>
+                <a th:href="@{'/activities/edit/' + ${activity.id}}" class="btn btn-primary btn-sm">Edit</a>
+                <a th:href="@{'/activities/delete/' + ${activity.id}}" class="btn btn-danger btn-sm"
+                   onclick="return confirm('Are you sure?');">Delete</a>
+            </td>
+        </tr>
+        <tr th:if="${activities.size()} == 0">
+            <td colspan="5" class="text-center">No activities found.</td> <!-- ✅ colspan changed to 5 -->
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

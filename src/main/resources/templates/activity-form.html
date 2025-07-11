@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Fitness Tracker - Activity</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+<div class="container mt-4">
+    <h2 th:if="${activity.id == null}">Add New Activity</h2>
+    <h2 th:if="${activity.id != null}">Edit Activity</h2>
+
+    <form th:action="@{/activities}" method="post">
+        <input type="hidden" th:if="${activity.id != null}" th:name="id" th:value="${activity.id}" />
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Activity Name</label>
+            <input type="text" id="name" name="name" th:value="${activity.name}" class="form-control" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="duration" class="form-label">Duration (minutes)</label>
+            <input type="number" id="duration" name="duration" th:value="${activity.duration}" class="form-control" required min="1" />
+        </div>
+
+        <div class="mb-3">
+            <label for="calories" class="form-label">Calories Burned</label>
+            <input type="number" id="calories" name="caloriesBurned" th:value="${activity.caloriesBurned}" class="form-control" required min="0" />
+        </div>
+
+        <!-- ✅ New Category Field -->
+        <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+            <select id="category" name="category" class="form-select" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="Cardio" th:selected="${activity.category == 'Cardio'}">Cardio</option>
+                <option value="Strength" th:selected="${activity.category == 'Strength'}">Strength</option>
+                <option value="Flexibility" th:selected="${activity.category == 'Flexibility'}">Flexibility</option>
+                <option value="Other" th:selected="${activity.category == 'Other'}">Other</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            <span th:if="${activity.id == null}">Add Activity</span>
+            <span th:if="${activity.id != null}">Update Activity</span>
+        </button>
+    </form>
+
+
+    <a href="/" class="btn btn-secondary mt-3">Back to Home</a>
+</div>
+</body>
+</html>
